@@ -1,12 +1,41 @@
-<h1>Scraped Data</h1>
+<h1 class="jumbotron jumbotron-fluid text-center">Scraped Data off StackOverFlow <strong>React</strong></h1>
 
 <ul>
-	<p>Hello World</p>
+	{{!-- <p>Input A Tag You Want to Scrape!</p> --}}
+	{{!-- <p>Example React, Javascript, HTML, Node, Java</p> --}}
+	{{!-- <input type="text" id="scrape-input"><br>
+	<input id="scrape-submit" type="submit" value="GO!"> --}}
+
+
 	{{#each scrapedmodals}}
+
+	<div class="card">
+		<div class="card-header text-center text-white bg-dark">
+			<h1 class="text-warning">{{this.title}}</h1>
+			<h5>Tags: {{this.tags}}</h5>
+		</div>
+		<div class="card-body">
+			<blockquote class="blockquote mb-0">
+				<h2 class="text-center">Summary</h2>
+				<p>{{this.summary}}</p>
+				<h6>{{this.relativeTime}}</h6>
+				<h6>{{this.absoluteTime}}</h6>
+				<footer class="blockquote-footer">
+					<p>User Profile Link: {{this.userProfileLink}}</p>
+					<p>User Name: {{this.userName}}</p>
+					<p>User Reputation Score: {{this.userReputationScore}}</p>
+					<p>Views: {{this.views}}</p>
+					<p>Votes: {{this.votes}}</p>
+					<p>Answers: {{this.answers}}</p>
+				</footer>
+			</blockquote>
+		</div>
+		<div class="card-footer">
+      <small class="text-muted">{{this.link}}</small>
+    </div>
+	</div>
 	<li>
-		<p>Title: {{this.title}}</p>
-		<p>Link: {{this.link}}</p>
-		<p>Summary: {{this.summary}}</p>
+
 	</li>
 	{{/each}}
 </ul>
