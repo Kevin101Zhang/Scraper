@@ -50,6 +50,10 @@ var ScrapeSchema = new Schema({
         type: String,
         trim: true,
     },
+    commentArr: [{
+        type: String,
+        trim: true,
+    }]
 });
 
 var ScrapedModal = mongoose.model("ScrapedModal", ScrapeSchema);

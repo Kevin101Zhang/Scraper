@@ -28,7 +28,6 @@ mongoose.connect("mongodb://localhost/ScraperDatabase", {
 
 app.get("/", function (req, res) {
 
-
     axios.get("https://stackoverflow.com/questions/tagged/react").then(function (response) {
 
         var $ = cheerio.load(response.data);
@@ -101,6 +100,27 @@ app.get("/", function (req, res) {
             res.json(err);
         });
 });
+
+
+app.post("/submit", function (req, res) {
+
+    db.create(req.body)
+    console.log("THIS IS REQBODY\n")
+    console.log(req.body)
+
+    .then(function(Information) {
+        console.log("This is DBNOT\n")
+        console.log(Information)
+        return db.findOneAndUpdate({where:{ link: Information.link}}, { $push: { commentArr: Information.newComment } }, { new: true });
+        })
+        .then(function (AddedComment) {
+            res.json(AddedComment);
+        })
+        .catch(function (err) {
+            res.json(err);
+        });
+});
+
 
 app.listen(PORT, function () {
     console.log("App running on port " + PORT + "!");

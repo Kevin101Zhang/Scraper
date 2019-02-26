@@ -1,41 +1,73 @@
-<h1 class="jumbotron jumbotron-fluid text-center">Scraped Data off StackOverFlow <strong>React</strong></h1>
+<h1 class="jumbotron jumbotron-fluid text-center">Scraped Data off StackOverFlow <strong>React</strong> <i
+		class="fas fa-code"></i></h1>
 
-<ul>
-	{{!-- <p>Input A Tag You Want to Scrape!</p> --}}
-	{{!-- <p>Example React, Javascript, HTML, Node, Java</p> --}}
-	{{!-- <input type="text" id="scrape-input"><br>
+
+{{!-- <p>Input A Tag You Want to Scrape!</p> --}}
+{{!-- <p>Example React, Javascript, HTML, Node, Java</p> --}}
+{{!-- <input type="text" id="scrape-input"><br>
 	<input id="scrape-submit" type="submit" value="GO!"> --}}
 
-
+<div class="MarginNPadding container-fluid">
 	{{#each scrapedmodals}}
 
 	<div class="card">
 		<div class="card-header text-center text-white bg-dark">
-			<h1 class="text-warning">{{this.title}}</h1>
-			<h5>Tags: {{this.tags}}</h5>
+			<h1 class="text-warning"> {{this.title}}</h1>
+			<h5><i class="fas fa-chevron-left"></i>Tags: {{this.tags}}<i class="fas fa-chevron-right"></i></h5>
 		</div>
 		<div class="card-body">
 			<blockquote class="blockquote mb-0">
-				<h2 class="text-center">Summary</h2>
+				<h2 class="text-center">Summary <i class="far fa-newspaper"></i></h2>
 				<p>{{this.summary}}</p>
-				<h6>{{this.relativeTime}}</h6>
-				<h6>{{this.absoluteTime}}</h6>
+				<h6 class="text-danger">{{this.relativeTime}}</h6>
+				<h6><i class="far fa-clock"></i>{{this.absoluteTime}}</h6>
 				<footer class="blockquote-footer">
 					<p>User Profile Link: {{this.userProfileLink}}</p>
-					<p>User Name: {{this.userName}}</p>
-					<p>User Reputation Score: {{this.userReputationScore}}</p>
-					<p>Views: {{this.views}}</p>
+					<p><i class="far fa-user"></i> {{this.userName}}</p>
+					<p><i class="far fa-star"></i> {{this.userReputationScore}}</p>
+					<p><i class="far fa-eye"></i> {{this.views}}</p>
 					<p>Votes: {{this.votes}}</p>
 					<p>Answers: {{this.answers}}</p>
 				</footer>
 			</blockquote>
 		</div>
 		<div class="card-footer">
-      <small class="text-muted">{{this.link}}</small>
-    </div>
+			<small class="text-muted"><i class="fas fa-link"></i>{{this.link}}</small>
+		</div>
+		<div class="form-group">
+			<div class="text-center">Leave A Comment<i class="far fa-comments"></i></div>
+			<textarea class="newCommentInput form-control" id="comment" rows="3"></textarea>
+		</div>
+		<div class="text-center">
+			<button type="submit" class="submitButton btn btn-danger mb-2">Submit</button>
+		</div>
 	</div>
-	<li>
-
-	</li>
+	<br><br>
 	{{/each}}
-</ul>
+</div>
+
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		$(".submitButton").on("click", function () {
+			event.preventDefault();
+			console.log("clicked");
+
+			var info = {
+				newComment: $(this).parent().parent().find("div.form-group").attr("textarea").text()
+				//New Comment Does not work... TroubleShoot it
+				id: $(this).parent().parent().find("div.card-footer").find("small.text-muted").text()
+			}
+			console.log(info);
+
+			$.ajax("/submit", {
+				type: "POST",
+				data: info,
+			}).then(
+				function () {
+					location.reload();
+					//Add ajax update after
+				})
+		});
+	});
+</script>

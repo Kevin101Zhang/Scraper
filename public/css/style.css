@@ -4,5 +4,9 @@ background-repeat: none;
 background-size: cover;
 }
 
-.card-body{
+.submitButton{
+ width:25%;
+}
+p{
+    margin:2px;
 }
