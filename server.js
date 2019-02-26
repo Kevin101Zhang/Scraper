@@ -104,21 +104,24 @@ app.get("/", function (req, res) {
 
 app.post("/submit", function (req, res) {
 
-    db.create(req.body)
-    console.log("THIS IS REQBODY\n")
-    console.log(req.body)
-
-    .then(function(Information) {
-        console.log("This is DBNOT\n")
+    db.create(req.body).then(function (Information) {
+        console.log("This is DB\n")
         console.log(Information)
-        return db.findOneAndUpdate({where:{ link: Information.link}}, { $push: { commentArr: Information.newComment } }, { new: true });
-        })
-        .then(function (AddedComment) {
-            res.json(AddedComment);
-        })
-        .catch(function (err) {
-            res.json(err);
-        });
+        db.findOneAndUpdate({
+                link: req.body.id
+            }, {
+                $push: {
+                    commentArr: req.body.newComment,
+                }
+            },
+            function (error, success) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log(success);
+                }
+            })
+    })
 });
 
 
